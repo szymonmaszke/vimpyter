@@ -1,6 +1,6 @@
 " Check if plugin already loaded, don't use this variable elsewhere
 
-if exists('g:loaded_vimpyter_something_random_now')
+if exists('g:loaded_vimpyter_something_random_now') || &compatible
     finish
 endif
 
@@ -10,14 +10,24 @@ if !has('nvim')
   finish
 endif
 
+if !executable('notedown')
+  echo 'notedown executable is required in order for this software to work. '
+        \ . 'Check whether you have needed dependencies installed in README.md'
+  finish
+endif
+
 " Set flag to prevent loading the plugin multiple times
 let g:loaded_vimpyter_something_random_now = 1
 
-" DEFINE COMMANDS
-command! -nargs=0 VimpyterJupyterMarkdown call vimpyter#jupyterToMarkdown()
-command! -nargs=0 VimpyterMarkdownJupyter call vimpyter#markdownToJupyter()
+if !exists('g:vimpyter_views_directory')
+  let g:vimpyter_views_directory = '~/.config/nvim/plugged/vimpyter/views'
+endif
 
-command! -nargs=0 VimpyterStartNotebook call vimpyter#startNotebook()
+" DEFINE COMMANDS
+command! -nargs=0 VimpyterCreateView call vimpyter#createView()
+
+command! -nargs=0 VimpyterStartJupyter call vimpyter#startJupyter()
+command! -nargs=0 VimpyterStartNteract call vimpyter#startNteract()
 command! -nargs=0 VimpyterUpdate call vimpyter#updateNotebook()
 
 command! -nargs=0 VimpyterInsertPythonBlock call vimpyter#insertPythonBlock()
@@ -26,7 +36,7 @@ command! -nargs=0 VimpyterInsertPythonBlock call vimpyter#insertPythonBlock()
 augroup VimpyterAutoCommands
     au!
 
-    autocmd BufReadPre *.ipynb silent :VimpyterJupyterMarkdown
+    autocmd BufReadPost *.ipynb silent :VimpyterCreateView
     autocmd BufWritePost *.ipynb silent :VimpyterUpdate
 
 augroup END

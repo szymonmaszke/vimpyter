@@ -19,8 +19,12 @@ endif
 " Set flag to prevent loading the plugin multiple times
 let g:loaded_vimpyter_something_random_now = 1
 
-if !exists('g:vimpyter_views_directory')
-  let g:vimpyter_views_directory = '~/.config/nvim/plugged/vimpyter/views'
+if !exists('g:vimpyter_jupyter_notebook_flags')
+  let g:vimpyter_jupyter_notebook_flags = ''
+endif
+
+if !exists('g:vimpyter_nteract_flags')
+  let g:vimpyter_nteract_flags = ''
 endif
 
 " DEFINE COMMANDS
@@ -36,8 +40,8 @@ command! -nargs=0 VimpyterInsertPythonBlock call vimpyter#insertPythonBlock()
 augroup VimpyterAutoCommands
     au!
 
-    autocmd BufReadPost *.ipynb silent :VimpyterCreateView
-    autocmd BufWritePost *.ipynb silent :VimpyterUpdate
+    autocmd BufReadPost *.ipynb :VimpyterCreateView
+    autocmd BufWritePost *.ipynb :VimpyterUpdate
 
 augroup END
 

@@ -1,11 +1,11 @@
-" Inserts python block recognized by notedown
+" Insert python block recognized by notedown
 function! vimpyter#insertPythonBlock()
-  exec 'normal!i```python'
+  exec 'normal!i```{.python .input}'
   exec 'normal!o```'
   exec 'normal!O'
 endfunction
 
-" Asynchronously starts notebook loader for given file
+" Asynchronously starts notebook loader for original file
 function! s:startNotebook(notebook_loader, flags)
   if exists('b:original_file')
     call jobstart(a:notebook_loader . ' ' . a:flags . ' ' . b:original_file)
@@ -34,23 +34,34 @@ function! vimpyter#updateNotebook()
 endfunction
 
 function! vimpyter#createView()
+  " Save original file path and create path to proxy
   let l:original_file = expand('%:p')
+  " Proxy is named after original file (/ are changed to underscores _)
   let l:proxy_file = $TMPDIR . '/' . substitute(l:original_file, '/', '_', 'g')[1:]
 
+  " Transform json to markdown and save the result in proxy
   call system('notedown --to markdown ' . l:original_file .
         \ ' > ' . l:proxy_file)
 
+  " Open proxy file
   silent execute 'edit' l:proxy_file
 
+  " Save references to proxy file and the original
   let b:original_file = l:original_file
   let b:proxy_file = l:proxy_file
 
+  " Close original file (it won't be edited directly)
   silent execute ':bd' l:original_file
 
-  " FOLDING OF PYTHON INPUT AND JSON OUTPUT + RENAMING
+  " Fold python's input and output cells using marker
   set foldmethod=marker
   set foldmarker=```{.,```
-  set foldtext=substitute(substitute(getline(v:foldstart),'```{.python\ .input\ \ n=','In{','g'),'```{.json\ .output\ n=','Out{','g')
+
+  " Substitution of fold name, effectively doing the following
+  " {.python .input n=i} -> In{i}
+  " {.json .output n=i} -> Out{i}
+  " {.python .input} -> Code Cell (unnumbered input cell)
+  set foldtext=substitute(substitute(substitute(getline(v:foldstart),'```{.python\ .input\ \ n=','In{','g'),'```{.json\ .output\ n=','Out{','g'),'```{.python\ .input}','Code\ cell','g')
 
   " SET FILETYPE TO JUPYTER
   set filetype=jupyter

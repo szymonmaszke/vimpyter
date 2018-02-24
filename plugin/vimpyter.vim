@@ -16,16 +16,17 @@ if !executable('notedown')
   finish
 endif
 
+" SET UP TEMP DIRECTORY IF NOT PRESENT
+if has('unix') && empty($TMPDIR)
+    let $TMPDIR = '/tmp'
+endif
+
 " Set flag to prevent loading the plugin multiple times
 let g:loaded_vimpyter_something_random_now = 1
 
-if !exists('g:vimpyter_jupyter_notebook_flags')
-  let g:vimpyter_jupyter_notebook_flags = ''
-endif
-
-if !exists('g:vimpyter_nteract_flags')
-  let g:vimpyter_nteract_flags = ''
-endif
+" CONFIGURATIONS FOR NOTEBOOKS RUNNERS
+let g:vimpyter_jupyter_notebook_flags = get(g:, 'vimpyter_jupyter_notebook_flags', '')
+let g:vimpyter_nteract_flags = get(g:, 'vimpyter_nteract_flags', '')
 
 " DEFINE COMMANDS
 command! -nargs=0 VimpyterCreateView call vimpyter#createView()

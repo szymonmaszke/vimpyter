@@ -19,10 +19,10 @@ function! vimpyter#startJupyter()
   call s:startNotebook('jupyter notebook', g:vimpyter_jupyter_notebook_flags)
 endfunction
 
-" function! vimpyter#startNteract()
-"   call jobstart('nteract')
-"   " call s:startNotebook('nteract', g:vimpyter_nteract_flags)
-" endfunction
+" CAN BE BUGGY, SEE NTERACT ISSUE: https://github.com/nteract/nteract/issues/2582
+function! vimpyter#startNteract()
+  call s:startNotebook('nteract', g:vimpyter_nteract_flags)
+endfunction
 
 function! vimpyter#updateNotebook()
   if exists('b:original_file')
@@ -35,7 +35,7 @@ endfunction
 
 function! vimpyter#createView()
   let l:original_file = expand('%:p')
-  let l:proxy_file = '/tmp/' . substitute(l:original_file, '/', '_', 'g')[1:]
+  let l:proxy_file = $TMPDIR . '/' . substitute(l:original_file, '/', '_', 'g')[1:]
 
   call system('notedown --to markdown ' . l:original_file .
         \ ' > ' . l:proxy_file)
@@ -45,14 +45,15 @@ function! vimpyter#createView()
   let b:original_file = l:original_file
   let b:proxy_file = l:proxy_file
 
-  " FOLDING OF PYTHON INPUT AND JSON OUTPUT
-  set foldmethod=marker
-  set foldmarker=```{.,```
-
-  set filetype=jupyter
-
   silent execute ':bd' l:original_file
 
+  " FOLDING OF PYTHON INPUT AND JSON OUTPUT + RENAMING
+  set foldmethod=marker
+  set foldmarker=```{.,```
+  set foldtext=substitute(substitute(getline(v:foldstart),'```{.python\ .input\ \ n=','In{','g'),'```{.json\ .output\ n=','Out{','g')
+
+  " SET FILETYPE TO JUPYTER
+  set filetype=jupyter
 endfunction
 
 function! vimpyter#getOriginalFile()

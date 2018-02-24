@@ -2,12 +2,8 @@ if exists('b:current_syntax')
     finish
 endif
 
-let b:current_syntax = ''
-unlet b:current_syntax
 runtime! syntax/markdown.vim
 
-let b:current_syntax = ''
-unlet b:current_syntax
 syntax include @Markdown syntax/markdown.vim
 
 let b:current_syntax = ''

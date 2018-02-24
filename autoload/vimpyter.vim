@@ -41,12 +41,15 @@ function! vimpyter#createView()
         \ ' > ' . l:proxy_file)
 
   silent execute 'edit' l:proxy_file
-  "TEMPORARY SOLUTION (UNTIL NEW SYNTAX FILE IS PROVIDED)
-  set filetype=python
-  "END
 
   let b:original_file = l:original_file
   let b:proxy_file = l:proxy_file
+
+  " FOLDING OF PYTHON INPUT AND JSON OUTPUT
+  set foldmethod=marker
+  set foldmarker=```{.,```
+
+  set filetype=jupyter
 
   silent execute ':bd' l:original_file
 

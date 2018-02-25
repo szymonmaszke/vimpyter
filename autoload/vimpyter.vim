@@ -37,7 +37,7 @@ function! vimpyter#createView()
   " Save original file path and create path to proxy
   let l:original_file = expand('%:p')
   " Proxy is named after original file (/ are changed to underscores _)
-  let l:proxy_file = $TMPDIR . '/' . substitute(l:original_file, '/', '_', 'g')[1:]
+  let l:proxy_file = g:vimpyter_view_directory . '/' . substitute(l:original_file, '/', '_', 'g')[1:]
 
   " Transform json to markdown and save the result in proxy
   call system('notedown --to markdown ' . l:original_file .

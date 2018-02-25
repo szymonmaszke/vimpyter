@@ -28,6 +28,7 @@ let g:loaded_vimpyter_something_random_now = 1
 " Parse user defined flags for notebook loaders
 let g:vimpyter_jupyter_notebook_flags = get(g:, 'vimpyter_jupyter_notebook_flags', '')
 let g:vimpyter_nteract_flags = get(g:, 'vimpyter_nteract_flags', '')
+let g:vimpyter_view_directory = get(g:, 'vimpyter_view_directory', $TMPDIR)
 
 " DEFINE COMMANDS
 command! -nargs=0 VimpyterCreateView call vimpyter#createView()

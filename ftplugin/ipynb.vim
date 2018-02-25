@@ -7,7 +7,6 @@ set foldmarker=```{.,```
 " {.json .output n=i} -> Out{i}
 " {.python .input} -> Code Cell (unnumbered input cell)
 set foldtext=substitute(substitute(substitute(getline(v:foldstart),'```{.python\ .input\ \ n=','In{','g'),'```{.json\ .output\ n=','Out{','g'),'```{.python\ .input}','In:','g')
-setlocal completefunc=syntaxcomplete#Complete
 
 if exists('g:loaded_deoplete')
   try

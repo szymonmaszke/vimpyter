@@ -8,3 +8,11 @@ set foldmarker=```{.,```
 " {.python .input} -> Code Cell (unnumbered input cell)
 set foldtext=substitute(substitute(substitute(getline(v:foldstart),'```{.python\ .input\ \ n=','In{','g'),'```{.json\ .output\ n=','Out{','g'),'```{.python\ .input}','In:','g')
 setlocal completefunc=syntaxcomplete#Complete
+
+if exists('g:loaded_deoplete')
+  try
+    call deoplete#custom#source('jedi', 'filetypes', ['ipynb'])
+  catch
+    echoerr "Unable to load deoplete-jedi source, maybe it wasn't installed?"
+  endtry
+endif

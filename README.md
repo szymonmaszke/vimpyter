@@ -38,9 +38,9 @@ Plugin provides some convenience commands:
 Example mappings (**put this in your .vimrc/init.vim**):
 
 ```vim
-autocmd Filetype jupyter nmap <silent><Leader>b :VimpyterInsertPythonBlock<CR>
-autocmd Filetype jupyter nmap <silent><Leader>j :VimpyterStartJupyter<CR>
-autocmd Filetype jupyter nmap <silent><Leader>n :VimpyterStartNteract<CR>
+autocmd Filetype ipynb nmap <silent><Leader>b :VimpyterInsertPythonBlock<CR>
+autocmd Filetype ipynb nmap <silent><Leader>j :VimpyterStartJupyter<CR>
+autocmd Filetype ipynb nmap <silent><Leader>n :VimpyterStartNteract<CR>
 ```
 
 ## Integrations with other plugins

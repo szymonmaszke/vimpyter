@@ -1,8 +1,8 @@
 # vimpyter
 
 <p align="center">
-  <img src="https://github.com/vyzyv/vimpyter/blob/master/images/jupyter_logo.png" height=200/> 
-  <img src="https://github.com/vyzyv/vimpyter/blob/master/images/vim_logo.png" width=200/>
+  <img src="https://user-images.githubusercontent.com/20703378/36676899-203f63f8-1b0d-11e8-9d28-6360ee3c181b.png" height=200/> 
+  <img src="https://user-images.githubusercontent.com/20703378/36676906-238b0b34-1b0d-11e8-86dd-30695296e7c6.png" width=200/>
 </p>
 
 **Edit Jupyter notebooks in your favourite editor (yeah, vim or neovim)**

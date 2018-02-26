@@ -5,7 +5,6 @@
 
 function! CellFoldingNaming()
   let l:fold_text = getline(v:foldstart)
-  let l:code_cell = ''
   if l:fold_text =~# '```{.python .input  n='
     let l:code_cell = 'In[' . matchstr(l:fold_text, '\d\+') . ']:'
   elseif l:fold_text =~# '```{.json .output n='

@@ -50,13 +50,11 @@ Currently supported plugins:
 - [w0rp/ale](https://github.com/w0rp/ale): asynchronous linter and fixer for Vim/Neovim
 - [Shougo/deoplete](https://github.com/Shougo/deoplete.nvim): asynchronous completion framework for Vim/Neovim. You have to install and configure [zchee/deoplete-jedi](https://github.com/zchee/deoplete-jedi) for python completions.
 
-You can request additional integrations or create them on your own (**pull requests are welcomed**)
+You can request additional integrations or create them on your own (**pull requests are welcomed**).
 
 ## Known bugs
 
 - [nteract crashes on startup](https://github.com/nteract/nteract/issues/2582#issuecomment-368308596)
-- **Saving file and leaving immediately deletes the original file.** You can artificially wait after save for some time (e.g. 1 second) and quit afterwards. If you lose your file anyway (you did not read the known bugs) **don't panic**. Just go to your /tmp directory (or anything you've set with variable ```g:vimpyter_view_directory```) and find the file named path_to_original_file.ipynb (with underscores instead of slashes). Afterwards convert it to jupyter using [notedown](https://github.com/aaren/notedown) (see their README for details).
 
-If you find other bugs please post an issue. Help with resolving the existing ones is **more than welcomed**.
-
+If you find other bugs please post an issue. If you want to improve this software do not hesitate to cooperate, cheers!
 

@@ -58,7 +58,7 @@ function! vimpyter#createView()
 endfunction
 
 function! vimpyter#notebookUpdatesFinished()
-  while jobwait([g:vimpyter_internal_last_save_flag], 5000) != 0
+  while jobwait([g:vimpyter_internal_last_save_flag], 5000) != -3
   endwhile
 endfunction
 

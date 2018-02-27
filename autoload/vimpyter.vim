@@ -26,7 +26,7 @@ endfunction
 
 function! vimpyter#updateNotebook()
   if exists('b:original_file')
-    silent call jobstart('notedown --from markdown --to notebook ' . b:proxy_file .
+    let g:vimpyter_internal_last_save_flag = jobstart('notedown --from markdown --to notebook ' . b:proxy_file .
           \ ' > ' . b:original_file)
   else
     echo 'Unable to update original file, buffer not found'
@@ -55,6 +55,11 @@ function! vimpyter#createView()
 
   " SET FILETYPE TO ipynb
   set filetype=ipynb
+endfunction
+
+function! vimpyter#notebookUpdatesFinished()
+  while jobwait([g:vimpyter_internal_last_save_flag], 5000) != 0
+  endwhile
 endfunction
 
 function! vimpyter#getOriginalFile()

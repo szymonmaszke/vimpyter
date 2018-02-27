@@ -30,9 +30,10 @@ let g:vimpyter_jupyter_notebook_flags = get(g:, 'vimpyter_jupyter_notebook_flags
 let g:vimpyter_nteract_flags = get(g:, 'vimpyter_nteract_flags', '')
 let g:vimpyter_view_directory = get(g:, 'vimpyter_view_directory', $TMPDIR)
 
-" DEFINE COMMANDS
-command! -nargs=0 VimpyterCreateView call vimpyter#createView()
+" Global flag indicating id of last updateNotebook job (when quitting with :wq for example)
+let g:vimpyter_internal_last_save_flag = 0
 
+" DEFINE COMMANDS
 command! -nargs=0 VimpyterStartJupyter call vimpyter#startJupyter()
 command! -nargs=0 VimpyterStartNteract call vimpyter#startNteract()
 command! -nargs=0 VimpyterUpdate call vimpyter#updateNotebook()
@@ -44,10 +45,11 @@ augroup VimpyterAutoCommands
     au!
 
     " If new/existing file opened, create view for it at the beginning
-    autocmd BufReadPost *.ipynb :VimpyterCreateView
-    autocmd BufNewFile *.ipynb :VimpyterCreateView
+    autocmd BufReadPost *.ipynb call vimpyter#createView()
+    autocmd BufNewFile *.ipynb call vimpyter#createView()
     " If view was saved transfer the changes from proxy to original file
     autocmd BufWritePost *.ipynb :VimpyterUpdate
+    autocmd VimLeavePre *.ipynb call vimpyter#notebookUpdatesFinished()
 
 augroup END
 

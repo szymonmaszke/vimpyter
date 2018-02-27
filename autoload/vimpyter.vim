@@ -7,12 +7,14 @@ endfunction
 
 " Asynchronously starts notebook loader for original file
 function! s:startNotebook(notebook_loader, flags)
-  if exists('b:original_file')
-    call jobstart(a:notebook_loader . ' ' . a:flags . ' ' . b:original_file)
-    echo 'Started ' . a:notebook_loader
+  if has('nvim')
+    call jobstart(a:notebook_loader . ' ' . a:flags . ' ' .
+          \ b:original_file)
   else
-    echo 'No reference to original .ipynb file'
+    call job_start(a:notebook_loader . ' ' . a:flags . ' ' .
+          \ b:original_file)
   endif
+  echo 'Started notebook'
 endfunction
 
 function! vimpyter#startJupyter()
@@ -25,19 +27,53 @@ function! vimpyter#startNteract()
 endfunction
 
 function! vimpyter#updateNotebook()
-  if exists('b:original_file')
-    let g:vimpyter_internal_last_save_flag = jobstart('notedown --from markdown --to notebook ' . b:proxy_file .
-          \ ' > ' . b:original_file)
+  function! s:updateNotebookNeovim()
+    function! s:updateSuccessNeovim(job_id, data, event)
+      if a:data == 0
+        echo 'Updated original notebook'
+      else
+        echoerr 'Failed to update original notebook'
+      endif
+    endfunction
+
+  let g:vimpyter_internal_last_save_flag = jobstart(
+        \ 'notedown --from markdown --to notebook ' . b:proxy_file .
+        \ ' > ' . b:original_file,
+        \ {
+        \  'on_exit': function('s:updateSuccessNeovim')
+        \ })
+  endfunction
+
+  function! s:updateNotebookVim()
+    function! s:updateSuccessVim(channel, message)
+      if a:message== 0
+        echo 'Updated original notebook'
+      else
+        echoerr 'Failed to update original notebook'
+      endif
+    endfunction
+
+    let l:command = [&shell, &shellcmdflag,
+          \ 'notedown --from markdown --to notebook ' .
+          \ b:proxy_file . ' > ' . b:original_file]
+    let g:vimpyter_internal_last_save_flag = job_start(
+          \ l:command, {'exit_cb': function('s:updateSuccessVim')})
+  endfunction
+
+  if has('nvim')
+    call s:updateNotebookNeovim()
   else
-    echo 'Unable to update original file, buffer not found'
+    call s:updateNotebookVim()
   endif
+
 endfunction
 
 function! vimpyter#createView()
   " Save original file path and create path to proxy
   let l:original_file = expand('%:p')
   " Proxy is named after original file (/ are changed to underscores _)
-  let l:proxy_file = g:vimpyter_view_directory . '/' . substitute(l:original_file, '/', '_', 'g')[1:]
+  let l:proxy_file = g:vimpyter_view_directory . '/' .
+        \ substitute(l:original_file, '/', '_', 'g')[1:]
 
   " Transform json to markdown and save the result in proxy
   call system('notedown --to markdown ' . l:original_file .
@@ -58,10 +94,17 @@ function! vimpyter#createView()
 endfunction
 
 function! vimpyter#notebookUpdatesFinished()
-  while jobwait([g:vimpyter_internal_last_save_flag], 5000) != -3
-  endwhile
+  if has('nvim')
+    while jobwait([g:vimpyter_internal_last_save_flag]) != [-3]
+    endwhile
+  else
+    if g:vimpyter_internal_last_save_flag != ''
+      while job_status(g:vimpyter_internal_last_save_flag) !~? 'dead'
+      endwhile
+    endif
+  endif
 endfunction
 
 function! vimpyter#getOriginalFile()
-  echo 'This view points to: ' . b:original_file
+  echo 'Proxy points to: ' . b:original_file
 endfunction

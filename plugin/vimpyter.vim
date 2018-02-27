@@ -1,13 +1,6 @@
 " Check if plugin already loaded, don't use this variable elsewhere
-if exists('g:loaded_vimpyter_something_random_now') || &compatible
+if exists('g:loaded_vimpyter_something_random_now')
     finish
-endif
-
-" Sanity checks
-if !has('nvim')
-  echo 'Currently only neovim is supported. Want to add support to vim? '
-        \ . 'Contribute to the plugin'
-  finish
 endif
 
 " Is notedown executable present?
@@ -15,6 +8,17 @@ if !executable('notedown')
   echo 'notedown executable is required in order for this software to work. '
         \ . 'Check whether you have needed dependencies installed in README.md'
   finish
+endif
+
+" Version checks
+if !has('nvim') && !v:version >= 800
+  echo '[VIMPYTER] You need neovim/vim8'
+        \ . ' to run this plugin. Update your software.'
+  finish
+endif
+
+if &compatible
+  echo '[VIMPYTER] compatible option is set. Disable it to use this plugin.'
 endif
 
 " Create temp directory if not present
@@ -30,8 +34,11 @@ let g:vimpyter_jupyter_notebook_flags = get(g:, 'vimpyter_jupyter_notebook_flags
 let g:vimpyter_nteract_flags = get(g:, 'vimpyter_nteract_flags', '')
 let g:vimpyter_view_directory = get(g:, 'vimpyter_view_directory', $TMPDIR)
 
-" Global flag indicating id of last updateNotebook job (when quitting with :wq for example)
-let g:vimpyter_internal_last_save_flag = 0
+if has('nvim')
+  let g:vimpyter_internal_last_save_flag = 0
+else
+  let g:vimpyter_internal_last_save_flag = ''
+endif
 
 " DEFINE COMMANDS
 command! -nargs=0 VimpyterStartJupyter call vimpyter#startJupyter()

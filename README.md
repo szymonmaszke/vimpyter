@@ -5,9 +5,11 @@
   <img src="https://user-images.githubusercontent.com/20703378/36676906-238b0b34-1b0d-11e8-86dd-30695296e7c6.png" width=200/>
 </p>
 
-**Edit Jupyter notebooks in your favourite editor (yeah, vim or neovim)**
+**Edit Jupyter notebooks in your favourite editor (yeah, neovim)**
 
 ## Demo
+
+**[More GIFs]('')**
 
 ## Installation
 
@@ -24,7 +26,7 @@ If you want to use different plugin manager/direct instalation please do refer t
 
 ## Dependencies
 
-- **Vim8 with asynchronous support or neovim**
+- **Vim8/neovim**
 - **[notedown](https://github.com/aaren/notedown)**
 
 ## Configuration
@@ -47,8 +49,8 @@ autocmd Filetype ipynb nmap <silent><Leader>n :VimpyterStartNteract<CR>
 
 Currently supported plugins:
 
-- [w0rp/ale](https://github.com/w0rp/ale): asynchronous linter and fixer for Vim/Neovim
-- [Shougo/deoplete](https://github.com/Shougo/deoplete.nvim): asynchronous completion framework for Vim/Neovim. You have to install and configure [zchee/deoplete-jedi](https://github.com/zchee/deoplete-jedi) for python completions.
+- **[Shougo/deoplete](https://github.com/Shougo/deoplete.nvim)**: asynchronous completion framework for Vim/Neovim. You have to install and configure [zchee/deoplete-jedi](https://github.com/zchee/deoplete-jedi) for python completions.
+- **[davidhalter/jedi-vim](https://github.com/davidhalter/jedi-vim/issues/784#issuecomment-369015726)**: planned, see the issue
 
 You can request additional integrations or create them on your own (**pull requests are welcomed**).
 
@@ -57,4 +59,3 @@ You can request additional integrations or create them on your own (**pull reque
 - [nteract crashes on startup](https://github.com/nteract/nteract/issues/2582#issuecomment-368308596)
 
 If you find other bugs please post an issue. If you want to improve this software do not hesitate to cooperate, cheers!
-

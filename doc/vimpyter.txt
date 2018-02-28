@@ -1,1 +1,91 @@
-LALALALALALA
+Vimpyter - Vim/Neovim integration with scientific notebooks
+
+*Author*: Szymon Maszke (https://github.com/vyzyv)
+
+===============================================================================
+CONTENTS                                                    *vimpyter-contents*
+
+
+  1. Introduction..........................|vimpyter-introduction|
+  2. Features..............................|vimpyter-features|
+  3. Commands and functions................|vimpyter-commands|
+  4. Options...............................|vimpyter-options|
+
+===============================================================================
+1. Introduction                                         *vimpyter-introduction*
+
+Vimpyter provides integration between .ipynb notebooks and Vim8/Neovim, 
+allowing you to edit them indirectly in your editor.
+
+When you open .ipynb filetype a new buffer of the same name is created (with
+path slashes changed to underscores) in temp directory and populated 
+with markdown representation of the notebook.
+
+Python and markdown syntax, as well as input/output cells are displayed using
+custom syntax file and folding.
+
+You can see your edits by starting Jupyter Notebook/Nteract application with
+single command/mapping (just remember to save your modifications).
+You may have to reload browser page/app to see the effects.
+
+===============================================================================
+2. Features                                                 *vimpyter-features*
+
+- Preserve input/output cells and fold them for easier usage
+- Display syntax of both Python and Markdown
+- Use autocompletion provided by deoplete plugin
+- Start Jupyter notebook preview in your browser
+- Start Nteract preview in separate application
+- Insert python cell with one keystroke
+- Error resistant (resistant to loss of your data, always has a markdown backup
+in tmp directory, operates only on proxy file)
+
+===============================================================================
+3. Commands and functions                                   *vimpyter-commands*
+
+Commands:
+
+  - VimpyterStartJupyter: asynchronously starts jupyter notebook instance
+  - VimpyterStartNteract: asynchronously starts nteract instance
+  - VimpyterInsertPythonBlock: inserts python code cell
+
+Functions:
+  
+  - vimpyter#getOriginalFile(): Returns the path to original file
+  - vimpyter#updateNotebook(): Updates notebook (hooked to file saving event by
+  default)
+  - vimpyter#createView(): creates proxy/view of notebook in temp, opens it and
+  allows you to edit the content
+  - vimpyter#notebookUpdatesFinished(): Waits untill all
+  vimpyter#updateNotebook() calls have ended (hooked to VimLeave event by
+  default). Should not be used on it's own
+
+===============================================================================
+4. Options                                                   *vimpyter-options*
+
+Vimpyter provides some basic options regarding placement of temporary files and
+command line options passed to Jupyter notebook/nteract.
+
+  - g:vimpyter_jupyter_notebook_flags: specifies flags passed to jupyter
+  notebook instance
+
+    Example usage:
+
+    let g:vimpyter_jupyter_notebook_flags = '--browser=firefox --port=8855'
+
+    See jupyter notebook --help for available options
+
+  - g:vimpyter_nteract_flags: specifies flags passed to nteract app instance
+
+    Usage same as above, see nteract --help for available options.
+
+  - g:vimpyter_view_directory: specifies directory where proxy/view files are
+  placed. Defaults to $TMP
+
+    Example usage:
+
+    let g:vimpyter_view_directory = '$HOME/.vimpyter_views'
+
+Other global variables used in this plugin should not be used or modified as it
+may crash the software.
+

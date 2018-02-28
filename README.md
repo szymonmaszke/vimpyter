@@ -15,7 +15,7 @@
 
 ## Installation
 
-**Vim8 or Neovim is required (asynchronous futures)**
+**Vim8 or Neovim is required (asynchronous features)**
 
 Install required external dependency:
 

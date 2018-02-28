@@ -10,8 +10,9 @@
 - To see **other features** click **[here](https://github.com/vyzyv/vimpyter/blob/master/doc/vimpyter.txt)**
 
 ## Demo
+[gif](https://user-images.githubusercontent.com/20703378/36789762-f2bca936-1c92-11e8-92f7-c8bf9bede802.gif)
 
-**[More GIFs]('')**
+**[Jupyter preview & more](https://github.com/vyzyv/vimpyter/issues/3)**
 
 ## Installation
 

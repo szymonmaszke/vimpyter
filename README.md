@@ -5,16 +5,17 @@
   <img src="https://user-images.githubusercontent.com/20703378/36676906-238b0b34-1b0d-11e8-86dd-30695296e7c6.png" width=200/>
 </p>
 
-**Edit Jupyter notebooks easily in your favourite editor!**
-
 - **Input/output cells** are displayed using **custom syntax** file and **folding**.
 - See your edits by starting **Jupyter Notebook/Nteract** application with **single command/mapping** (just remember to save your modifications). You may have to reload browser page/app to see the effects.
+- To see **other features** click **[here](https://github.com/vyzyv/vimpyter/blob/master/doc/vimpyter.txt)**
 
 ## Demo
 
 **[More GIFs]('')**
 
 ## Installation
+
+**Vim8 or Neovim is required (asynchronous futures)**
 
 Install required external dependency:
 

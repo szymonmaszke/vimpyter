@@ -7,13 +7,20 @@
 
 **Edit Jupyter notebooks in your favourite editor (yeah, neovim)**
 
+- **Input/output cells** are displayed using **custom syntax** file and **folding**.
+- See your edits by starting **Jupyter Notebook/Nteract** application with **single command/mapping** (just remember to save your modifications). You may have to reload browser page/app to see the effects.
+
 ## Demo
 
 **[More GIFs]('')**
 
 ## Installation
 
-To install this plugin you should use plugin manager like **[vim-plug](https://github.com/junegunn/vim-plug)** or **[Vundle](https://github.com/VundleVim/Vundle.vim)**:
+Install required external dependency:
+
+- **[notedown](https://github.com/aaren/notedown)**
+
+Install plugin using plugin manager like **[vim-plug](https://github.com/junegunn/vim-plug)** or **[Vundle](https://github.com/VundleVim/Vundle.vim)**:
 
 ```vim
 Plug 'vyzyv/vimpyter' "vim-plug
@@ -21,13 +28,6 @@ Plugin 'vyzyv/vimpyter' "Vundle
 ```
 
 If you want to use different plugin manager/direct instalation please do refer to their respective repositories/documentation.
-
-**Make sure you have the required dependencies**
-
-## Dependencies
-
-- **Vim8/neovim**
-- **[notedown](https://github.com/aaren/notedown)**
 
 ## Configuration
 
@@ -45,17 +45,19 @@ autocmd Filetype ipynb nmap <silent><Leader>j :VimpyterStartJupyter<CR>
 autocmd Filetype ipynb nmap <silent><Leader>n :VimpyterStartNteract<CR>
 ```
 
+To see all available flags/commands refer to [vim's documentation](https://github.com/vyzyv/vimpyter/blob/master/doc/vimpyter.txt)
+
 ## Integrations with other plugins
 
 Currently supported plugins:
 
-- **[Shougo/deoplete](https://github.com/Shougo/deoplete.nvim)**: asynchronous completion framework for Vim/Neovim. You have to install and configure [zchee/deoplete-jedi](https://github.com/zchee/deoplete-jedi) for python completions.
+- **[Shougo/deoplete](https://github.com/Shougo/deoplete.nvim)**: asynchronous completion framework for Vim/Neovim. You have to install and configure **[zchee/deoplete-jedi](https://github.com/zchee/deoplete-jedi)** for python completions.
 - **[davidhalter/jedi-vim](https://github.com/davidhalter/jedi-vim/issues/784#issuecomment-369015726)**: planned, see the issue
 
 You can request additional integrations or create them on your own (**pull requests are welcomed**).
 
 ## Known bugs
 
-- [nteract crashes on startup](https://github.com/nteract/nteract/issues/2582#issuecomment-368308596)
+- **[nteract crashes on startup](https://github.com/nteract/nteract/issues/2582#issuecomment-368308596)**
 
-If you find other bugs please post an issue. If you want to improve this software do not hesitate to cooperate, cheers!
+If you find other bugs please post an issue. If you want to improve this software do not hesitate to cooperate!

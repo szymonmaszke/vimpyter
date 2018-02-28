@@ -58,6 +58,6 @@ You can request additional integrations or create them on your own (**pull reque
 
 ## Known bugs
 
-- **[nteract crashes on startup](https://github.com/nteract/nteract/issues/2582#issuecomment-368308596)**
+- **[nteract crashes on startup](https://github.com/nteract/nteract/issues/2582#issuecomment-368308596)** (usually does not occure)
 
 If you find other bugs please post an issue. If you want to improve this software do not hesitate to cooperate!

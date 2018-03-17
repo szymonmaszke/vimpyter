@@ -1,7 +1,7 @@
 " Substitution of fold name, effectively doing the following
-" {.python .input n=i} -> In{i}
-" {.json .output n=i} -> Out{i}
-" {.python .input} -> Code Cell (unnumbered input cell)
+" {.python .input n=i} -> In[i]:
+" {.json .output n=i} -> Out[i]:
+" {.python .input} -> In[]:
 
 function! CellFoldingNaming()
   let l:fold_text = getline(v:foldstart)
@@ -16,11 +16,13 @@ function! CellFoldingNaming()
 endfunction
 
 " Fold python's input and output cells using marker
+" (you should not change the folding method!)
 set foldmethod=marker
 set foldmarker=```{.,```
 
 set foldtext=CellFoldingNaming()
 
+" If deoplete present try to load custom jedi source
 if exists('g:loaded_deoplete')
   try
     call deoplete#custom#source('jedi', 'filetypes', ['ipynb'])

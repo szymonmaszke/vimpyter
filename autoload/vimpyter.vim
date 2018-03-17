@@ -7,6 +7,7 @@ endfunction
 
 " Asynchronously starts notebook loader for original file
 function! s:startNotebook(notebook_loader, flags)
+  " Different async commands have to be issued for nvim/vim
   if has('nvim')
     call jobstart(a:notebook_loader . ' ' . a:flags . ' ' .
           \ b:original_file)
@@ -26,7 +27,9 @@ function! vimpyter#startNteract()
   call s:startNotebook('nteract', g:vimpyter_nteract_flags)
 endfunction
 
+" Update jupyter notebook when saving buffer
 function! vimpyter#updateNotebook()
+  " Updating notebook for neovim (another function for vim, line 53)
   function! s:updateNotebookNeovim()
     function! s:updateSuccessNeovim(job_id, data, event)
       if a:data == 0
@@ -36,6 +39,8 @@ function! vimpyter#updateNotebook()
       endif
     endfunction
 
+  "Set the last updated file flag (job_id in case of neovim)
+  "(see function below: vimpyter#notebookUpdatesFinished())
   let g:vimpyter_internal_last_save_flag = jobstart(
         \ 'notedown --from markdown --to notebook ' . b:proxy_file .
         \ ' > ' . b:original_file,
@@ -44,6 +49,7 @@ function! vimpyter#updateNotebook()
         \ })
   endfunction
 
+  "Updating notebook for vim
   function! s:updateNotebookVim()
     function! s:updateSuccessVim(channel, message)
       if a:message== 0
@@ -53,6 +59,8 @@ function! vimpyter#updateNotebook()
       endif
     endfunction
 
+    "Set the last updated file flag (string in case of vim, see documentation)
+    "(see function below: vimpyter#notebookUpdatesFinished())
     let l:command = [&shell, &shellcmdflag,
           \ 'notedown --from markdown --to notebook ' .
           \ b:proxy_file . ' > ' . b:original_file]
@@ -93,18 +101,24 @@ function! vimpyter#createView()
   set filetype=ipynb
 endfunction
 
+" Close vim/nvim only if all updates finished
 function! vimpyter#notebookUpdatesFinished()
   if has('nvim')
+    " infinite loop waiting for last update to finish
     while jobwait([g:vimpyter_internal_last_save_flag]) != [-3]
     endwhile
   else
+    " Vim asynchronous API returns string instead of job_id (WHY?!)
+    " It's internal flag regarding last saved file has to be empty string
     if g:vimpyter_internal_last_save_flag != ''
+      " infinite loop waiting for last update to finish
       while job_status(g:vimpyter_internal_last_save_flag) !~? 'dead'
       endwhile
     endif
   endif
 endfunction
 
+" Mostly for debugging purposes, prints original's file path
 function! vimpyter#getOriginalFile()
   echo 'Proxy points to: ' . b:original_file
 endfunction

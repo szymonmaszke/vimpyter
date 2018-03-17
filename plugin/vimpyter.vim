@@ -17,6 +17,7 @@ if !has('nvim') && !v:version >= 800
   finish
 endif
 
+" Vi compatibility has to be turned off
 if &compatible
   echo '[VIMPYTER] compatible option is set. Disable it to use this plugin.'
 endif
@@ -34,6 +35,10 @@ let g:vimpyter_jupyter_notebook_flags = get(g:, 'vimpyter_jupyter_notebook_flags
 let g:vimpyter_nteract_flags = get(g:, 'vimpyter_nteract_flags', '')
 let g:vimpyter_view_directory = get(g:, 'vimpyter_view_directory', $TMPDIR)
 
+" Neovim's jobstart returns id (integer) while vim's job_start returns string.
+" vimpyter_internal_last_save_flag points to the job that was run last during saving.
+" IT IS POSSIBLE THIS METHOD WILL FAIL, but I don't see any other way to check
+" whether any save job is running during closing.
 if has('nvim')
   let g:vimpyter_internal_last_save_flag = 0
 else

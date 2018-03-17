@@ -15,6 +15,7 @@ unlet b:current_syntax
 syntax include @Python syntax/python.vim
 " Set up higlighting:
 " Python blocks use python, everything else in contained in Markdown syntax
+" Adding bash/other code syntax? Is it possible to detect it with low cost?
 syntax region pythonCode matchgroup=Snip start="^```{.python .*" end="```" containedin=@Markdown contains=@Python
 
 "Nice color for python's block beginning

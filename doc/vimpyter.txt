@@ -17,9 +17,10 @@ CONTENTS                                                    *vimpyter-contents*
 Vimpyter provides integration between .ipynb notebooks and Vim8/Neovim, 
 allowing you to edit them indirectly in your editor.
 
-When you open .ipynb filetype a new buffer of the same name is created (with
-path slashes changed to underscores) in temp directory and populated 
-with markdown representation of the notebook.
+When you open .ipynb filetype a new buffer of the same name is created 
+in /tmp (if buffer with the same name already exists in /tmp, the number is
+appended, e.g. existing: example.ipynb, new buffer name: example1.ipynb) 
+directory and populated  with markdown representation of the notebook.
 
 Python and markdown syntax, as well as input/output cells are displayed using
 custom syntax file and folding.

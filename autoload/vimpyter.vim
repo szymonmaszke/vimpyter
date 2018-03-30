@@ -76,12 +76,29 @@ function! vimpyter#updateNotebook()
 
 endfunction
 
+"Create view by notedown in /tmp directory with specified filename
 function! vimpyter#createView()
+  "Checks if buffer of this name already exists.
+  "If it does, returns the name of buffer with appropriate number appended
+  "Otherwise returns buffer name
+  function! s:checkNameExistence(name)
+    " Buffer name like this already exists, append number
+    if has_key(g:vimpyter_buffer_names, a:name)
+      let l:buffer_name = g:vimpyter_buffer_names[a:name]
+      let g:vimpyter_buffer_names[a:name] = l:buffer_name + 1
+      return a:name . string(l:buffer_name) . '.ipynb'
+    else
+      let g:vimpyter_buffer_names[a:name] = 0
+      return a:name . '.ipynb'
+    endif
+    return ''
+  endfunction
+
   " Save original file path and create path to proxy
   let l:original_file = substitute(expand('%:p'), '\ ', '\\ ', 'g')
   " Proxy is named after original file (/ are changed to underscores _)
-  let l:proxy_file = g:vimpyter_view_directory . '/' .
-        \ substitute(l:original_file, '/', '-', 'g')[1:]
+  let l:proxy_buffer_name = s:checkNameExistence(expand('%:t:r'))
+  let l:proxy_file = g:vimpyter_view_directory . '/' . l:proxy_buffer_name
 
   " Transform json to markdown and save the result in proxy
   call system('notedown --to markdown ' . l:original_file .
@@ -118,7 +135,7 @@ function! vimpyter#notebookUpdatesFinished()
   endif
 endfunction
 
-" Mostly for debugging purposes, prints original's file path
+" Mostly for debugging purposes, prints original file path
 function! vimpyter#getOriginalFile()
   echo 'Proxy points to: ' . b:original_file
 endfunction

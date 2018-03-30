@@ -45,6 +45,8 @@ else
   let g:vimpyter_internal_last_save_flag = ''
 endif
 
+let g:vimpyter_buffer_names = {}
+
 " DEFINE COMMANDS
 command! -nargs=0 VimpyterStartJupyter call vimpyter#startJupyter()
 command! -nargs=0 VimpyterStartNteract call vimpyter#startNteract()

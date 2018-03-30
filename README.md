@@ -54,9 +54,21 @@ To see all available flags/commands refer to [vim's documentation](https://githu
 Currently supported plugins:
 
 - **[Shougo/deoplete](https://github.com/Shougo/deoplete.nvim)**: asynchronous completion framework for Vim/Neovim. You have to install and configure **[zchee/deoplete-jedi](https://github.com/zchee/deoplete-jedi)** for python completions.
-- **[davidhalter/jedi-vim](https://github.com/davidhalter/jedi-vim/issues/784#issuecomment-369015726)**: planned, see the issue
+
 
 You can request additional integrations or create them on your own (**pull requests are welcomed**).
+
+## Contributors wanted!
+
+Things you could do to improve this software:
+
+**Integrations with other plugins**:
+- **[davidhalter/jedi-vim](https://github.com/davidhalter/jedi-vim)**: Things like go to definition and documentation, maybe autocompletion (available as choice instead of **deoplete-jedi**).
+- **[w0rp/ale](https://github.com/w0rp/ale)**: Linting/fixing of .ipynb file. Using linters like flake8 from python or maybe custom made linter/fixer specifically for .ipynb file.
+
+**Other improvements**:
+- **Automatically update notebook on save**: See **[this issue](https://github.com/vyzyv/vimpyter/issues/4)** for more informations
+- **Completion from ipython console**: It may be faster to use this one. Check **[jonathanslenders/ptpython](https://github.com/jonathanslenders/ptpython)** for possibilities.
 
 ## Known bugs
 

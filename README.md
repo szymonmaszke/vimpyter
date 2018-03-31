@@ -49,6 +49,17 @@ autocmd Filetype ipynb nmap <silent><Leader>n :VimpyterStartNteract<CR>
 
 To see all available flags/commands refer to [vim's documentation](https://github.com/vyzyv/vimpyter/blob/master/doc/vimpyter.txt)
 
+## Options
+
+Following options are provided:
+
+- **g:vimpyter_color**: display command line output in colour (0 or 1)
+- **g:vimpyter_jupyter_notebook_flags**: string describing flags passed to Jupyter notebook
+- **g:vimpyter_nteract_flags**: string describing flags passed to nteract app
+- **g:vimpyter_view_directory**: directory where proxy files are created (default: ```$TMP```)
+
+For detailed description type in your editor ```:help vimpyter-options```
+
 ## Integrations with other plugins
 
 Currently supported plugins:

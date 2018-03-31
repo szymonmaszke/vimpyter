@@ -38,6 +38,7 @@ You may have to reload browser page/app to see the effects.
 - Start Jupyter notebook preview in your browser
 - Start Nteract preview in separate application
 - Insert python cell with one keystroke
+- Colored output of vimpyter commands in cmdline
 - Error resistant (resistant to loss of your data, always has a markdown backup
 in tmp directory, operates only on proxy file)
 
@@ -67,6 +68,22 @@ Functions:
 Vimpyter provides some basic options regarding placement of temporary files and
 command line options passed to Jupyter notebook/nteract.
 
+  - g:vimpyter_color: Either 1 (for on) or 0 (for off). If set, messages like 
+  'Updated source notebook' in your vim command line will be colored.
+
+    If you want to change highlighting colors of those messages, you can modify
+    following highlight groups:
+
+    - VimpyterStartJupyter 
+    - VimpyterStartNteract 
+    - VimpyterUpdate
+
+    Example:
+
+      highlight VimpyterUpdate term=bold ctermfg=14
+
+    Default value: 0
+
   - g:vimpyter_jupyter_notebook_flags: specifies flags passed to jupyter
   notebook instance
 
@@ -81,12 +98,13 @@ command line options passed to Jupyter notebook/nteract.
     Usage same as above, see nteract --help for available options.
 
   - g:vimpyter_view_directory: specifies directory where proxy/view files are
-  placed. Defaults to $TMP
+  placed. 
 
     Example usage:
 
     let g:vimpyter_view_directory = '$HOME/.vimpyter_views'
 
+    Default value: $TMP
+
 Other global variables used in this plugin should not be used or modified as it
 may crash the software.
-

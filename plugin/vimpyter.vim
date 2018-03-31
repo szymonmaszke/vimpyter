@@ -1,5 +1,5 @@
 " Check if plugin already loaded, don't use this variable elsewhere
-if exists('g:loaded_vimpyter_something_random_now')
+if exists('g:loaded_vimpyter_plugin_dont_use_this_flag_elsewhere')
     finish
 endif
 
@@ -28,12 +28,15 @@ if has('unix') && empty($TMPDIR)
 endif
 
 " Set flag to prevent loading the plugin multiple times
-let g:loaded_vimpyter_something_random_now = 1
+let g:loaded_vimpyter_plugin_dont_use_this_flag_elsewhere = 1
 
 " Parse user defined flags for notebook loaders
 let g:vimpyter_jupyter_notebook_flags = get(g:, 'vimpyter_jupyter_notebook_flags', '')
 let g:vimpyter_nteract_flags = get(g:, 'vimpyter_nteract_flags', '')
 let g:vimpyter_view_directory = get(g:, 'vimpyter_view_directory', $TMPDIR)
+
+" Parse configuration for colorful display of text in cmdline
+let g:vimpyter_color = get(g:, 'vimpyter_color', 0)
 
 " Neovim's jobstart returns id (integer) while vim's job_start returns string.
 " vimpyter_internal_last_save_flag points to the job that was run last during saving.

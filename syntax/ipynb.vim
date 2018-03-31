@@ -20,4 +20,9 @@ syntax region pythonCode matchgroup=Snip start="^```{.python .*" end="```" conta
 
 "Nice color for python's block beginning
 hi link Snip SpecialComment
+
+highlight VimpyterStartJupyter term=bold gui=bold guifg=#ffa500 ctermfg=155
+highlight VimpyterStartNteract term=bold gui=bold guifg=#5b7373 ctermfg=155
+highlight VimpyterUpdate term=bold gui=bold guifg=#4caf50 ctermfg=155
+
 let b:current_syntax = 'jupyter'

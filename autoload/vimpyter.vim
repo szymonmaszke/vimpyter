@@ -1,3 +1,20 @@
+" Display terminal messages in color if g:vimpyter_color = 1
+function! s:colorEcho(message, highlight_group)
+  if g:vimpyter_color
+    if a:highlight_group ==? 'jupyter'
+      echohl VimpyterStartJupyter
+    elseif a:highlight_group ==? 'nteract'
+      echohl VimpyterStartNteract
+    else
+      echohl VimpyterUpdate
+    endif
+    echo a:message
+    echohl None
+  else
+    echo a:message
+  endif
+endfunction
+
 " Insert python block recognized by notedown
 function! vimpyter#insertPythonBlock()
   exec 'normal!i```{.python .input}'
@@ -15,16 +32,17 @@ function! s:startNotebook(notebook_loader, flags)
     call job_start(a:notebook_loader . ' ' . a:flags . ' ' .
           \ b:original_file)
   endif
-  echo 'Started notebook'
 endfunction
 
 function! vimpyter#startJupyter()
   call s:startNotebook('jupyter notebook', g:vimpyter_jupyter_notebook_flags)
+  call s:colorEcho('Started Jupyter notebook', 'jupyter')
 endfunction
 
 " CAN BE BUGGY, SEE NTERACT ISSUE: https://github.com/nteract/nteract/issues/2582
 function! vimpyter#startNteract()
   call s:startNotebook('nteract', g:vimpyter_nteract_flags)
+  call s:colorEcho('Started Nteract app', 'nteract')
 endfunction
 
 " Update jupyter notebook when saving buffer
@@ -33,7 +51,7 @@ function! vimpyter#updateNotebook()
   function! s:updateNotebookNeovim()
     function! s:updateSuccessNeovim(job_id, data, event)
       if a:data == 0
-        echo 'Updated original notebook'
+        call s:colorEcho('Updated source notebook', 'update')
       else
         echoerr 'Failed to update original notebook'
       endif
@@ -53,7 +71,7 @@ function! vimpyter#updateNotebook()
   function! s:updateNotebookVim()
     function! s:updateSuccessVim(channel, message)
       if a:message== 0
-        echo 'Updated original notebook'
+        call s:colorEcho('Updated source notebook', 'update')
       else
         echoerr 'Failed to update original notebook'
       endif
@@ -96,7 +114,8 @@ function! vimpyter#createView()
 
   " Save original file path and create path to proxy
   let l:original_file = substitute(expand('%:p'), '\ ', '\\ ', 'g')
-  " Proxy is named after original file (/ are changed to underscores _)
+  " Proxies are named accordingly to %:t:r (with appended number for
+  " replicating names) (see documentation for more informations)
   let l:proxy_buffer_name = s:checkNameExistence(expand('%:t:r'))
   let l:proxy_file = g:vimpyter_view_directory . '/' . l:proxy_buffer_name
 
@@ -127,7 +146,7 @@ function! vimpyter#notebookUpdatesFinished()
   else
     " Vim asynchronous API returns string instead of job_id (WHY?!)
     " It's internal flag regarding last saved file has to be empty string
-    if g:vimpyter_internal_last_save_flag != ''
+    if g:vimpyter_internal_last_save_flag !=? ''
       " infinite loop waiting for last update to finish
       while job_status(g:vimpyter_internal_last_save_flag) !~? 'dead'
       endwhile

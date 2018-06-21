@@ -25,8 +25,8 @@ Install required external dependency:
 Install plugin using plugin manager like **[vim-plug](https://github.com/junegunn/vim-plug)** or **[Vundle](https://github.com/VundleVim/Vundle.vim)**:
 
 ```vim
-Plug 'vyzyv/vimpyter' "vim-plug
-Plugin 'vyzyv/vimpyter' "Vundle
+Plug 'szymonmaszke/vimpyter' "vim-plug
+Plugin 'szymonmaszke/vimpyter' "Vundle
 ```
 
 If you want to use different plugin manager/direct instalation please do refer to their respective repositories/documentation.

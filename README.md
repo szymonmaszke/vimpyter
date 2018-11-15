@@ -1,3 +1,5 @@
+## Work on the next version began, post your feature ideas [here](https://github.com/szymonmaszke/vimpyter/issues/17)
+
 # vimpyter
 
 <p align="center">

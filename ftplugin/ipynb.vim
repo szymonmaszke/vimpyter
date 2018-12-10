@@ -17,10 +17,10 @@ endfunction
 
 " Fold python's input and output cells using marker
 " (you should not change the folding method!)
-set foldmethod=marker
-set foldmarker=```{.,```
+setlocal foldmethod=marker
+setlocal foldmarker=```{.,```
 
-set foldtext=CellFoldingNaming()
+setlocal foldtext=CellFoldingNaming()
 
 " If deoplete present try to load custom jedi source
 if exists('g:loaded_deoplete')

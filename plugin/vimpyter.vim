@@ -5,21 +5,21 @@ endif
 
 " Is notedown executable present?
 if !executable('notedown')
-  echo 'notedown executable is required in order for vimpyter.vim to work. '
+  echom 'notedown executable is required in order for vimpyter.vim to work. '
         \ . 'Check whether you have needed dependencies installed in README.md'
   finish
 endif
 
 " Version checks
 if !has('nvim') && !v:version >= 800
-  echo '[VIMPYTER] You need neovim/vim8'
+  echom '[VIMPYTER] You need neovim/vim8'
         \ . ' to run this plugin. Update your software.'
   finish
 endif
 
 " Vi compatibility has to be turned off
 if &compatible
-  echo '[VIMPYTER] compatible option is set. Disable it to use this plugin.'
+  echom '[VIMPYTER] compatible option is set. Disable it to use this plugin.'
 endif
 
 " Create temp directory if not present

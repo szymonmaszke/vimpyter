@@ -5,7 +5,7 @@ endif
 
 " Is notedown executable present?
 if !executable('notedown')
-  echo 'notedown executable is required in order for this software to work. '
+  echo 'notedown executable is required in order for vimpyter.vim to work. '
         \ . 'Check whether you have needed dependencies installed in README.md'
   finish
 endif

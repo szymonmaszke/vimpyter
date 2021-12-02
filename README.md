@@ -1,4 +1,10 @@
-## Work on the next version began, post your feature ideas [here](https://github.com/szymonmaszke/vimpyter/issues/17)
+# THIS PROJECT IS NO LONGER MAINTAINED!
+
+Please use one of the alternative approaches, for example [dccsilag/magma](dccsillag /
+magma-nvim).
+
+Might also want to check out [this article](https://alpha2phi.medium.com/jupyter-notebook-vim-neovim-c2d67d56d563) which highlights
+more up-to-date approaches with latest neovim features!
 
 # vimpyter
 
